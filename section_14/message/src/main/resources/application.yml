@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: "message"
+  cloud:
+    function:
+      definition: email|sms
+    stream:
+      bindings:
+        emailsms-in-0: # input message binding name
+          destination: send-communication
+          group: ${spring.application.name}
+        emailsms-out-0: # output message binding name
+          destination: communication-send
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+server:
+  port: 9010

@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+  #    active: native
+    active: git
+  cloud:
+    config:
+      server:
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///E://udemy_courses//mastering microservices//codepractice//microservices//section6//v2-spring-cloud-config//configserver//src//main//resources//config"
+        git:
+#          uri indicates the address of git repo
+#          uri: "https://github.com/eazybytes/eazybytes-config.git"
+          uri: "https://github.com/phantom-bear/eazybytes-config.git" # use my GitHub link
+
+#          default-label indicates the branch
+          default-label: main
+#          timeout limit how long should config server wait to query the config
+          timeout: 25
+#          clone config when this server starts, if not enabled then config will be refreshed only when first request come, this may cause config inconsistency issue
+          clone-on-start: true
+#          sometimes there will have some local changes, by enabling this tag, it will force cover any local changes
+          force-pull: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+encrypt:
+  key: "45D81EC1EF61DF9AD8D3E5BB397F9"
+
+server:
+  port: 8071
+
